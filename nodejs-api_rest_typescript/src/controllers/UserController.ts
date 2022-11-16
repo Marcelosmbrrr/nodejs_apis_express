@@ -1,35 +1,49 @@
 import { randomUUID } from "crypto";
 import { Request, Response } from "express";
+import { IController } from "../controllers/IController";
+// Model
+import { User } from "../models/User";
 
-interface IUser {
-    id: string,
-    name: string,
-    email: string,
-    password: string
-}
-
-const entity: IUser[] = []
-
-class UserController {
+class UserController implements IController {
 
     async index(req: Request, res: Response) {
-        return res.send("INDEX")
+        try {
+            res.send("INDEX");
+        } catch (error) {
+            res.status(400).send(error);
+        }
     }
 
     async find(req: Request, res: Response) {
-        return res.send("FIND")
+        try {
+            res.send("FIND");
+        } catch (error) {
+            res.status(400).send(error);
+        }
     }
 
     async store(req: Request, res: Response) {
-        return res.send("STORE")
+        try {
+            res.send("STORE");
+        } catch (error) {
+            res.status(400).send(error);
+        }
     }
 
     async update(req: Request, res: Response) {
-        return res.send("UPDATE")
+        try {
+            res.send("UPDATE");
+        } catch (error) {
+            res.status(400).send(error);
+        }
     }
 
     async remove(req: Request, res: Response) {
-        return res.send("REMOVE")
+        try {
+            res.send("REMOVE");
+        } catch (error) {
+            res.status(400).send(error);
+        }
     }
 
 }
