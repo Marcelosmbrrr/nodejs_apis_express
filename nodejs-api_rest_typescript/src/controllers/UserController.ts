@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import { Request, Response } from "express";
 import { validationResult } from 'express-validator';
 import { IController } from "../controllers/IController";
@@ -8,19 +7,31 @@ import { User } from "../models/User";
 class UserController implements IController {
 
     async index(req: Request, res: Response) {
+
         try {
-            res.send("INDEX");
+            const users = await User.findAll();
+            return res.status(200).json(users);
         } catch (error) {
-            res.status(400).send(error);
+            return res.status(400).send(error);
         }
+
     }
 
     async find(req: Request, res: Response) {
+
         try {
-            res.send("FIND");
+            const identifier = req.params.id;
+            const user = await User.findOne({ where: { identifier } });
+
+            if (!User) {
+                return res.status(404).json("User not found!");
+            }
+
+            return res.status(200).json(User);
         } catch (error) {
-            res.status(400).send(error);
+            return res.status(400).send(error);
         }
+
     }
 
     async store(req: Request, res: Response) {
@@ -32,9 +43,10 @@ class UserController implements IController {
         }
 
         try {
-            res.send("STORE");
+            await User.create(req.body);
+            return res.status(201).json("User creation successful!");
         } catch (error) {
-            res.status(400).send(error);
+            return res.status(400).send(error);
         }
     }
 
@@ -47,15 +59,40 @@ class UserController implements IController {
         }
 
         try {
-            res.send("UPDATE");
+            const identifier = req.params.id;
+            const user = await User.findOne({ where: { identifier } });
+
+            if (!user) {
+                return res.status(404).json("User not found!");
+            }
+
+            await User.update({
+                name: req.body.name,
+                email: req.body.email,
+                password: req.body.password
+            }, {
+                where: {
+                    id: identifier
+                }
+            });
+
+            return res.status(200).json("User successful updated!");
         } catch (error) {
-            res.status(400).send(error);
+            return res.status(400).send(error);
         }
     }
 
     async remove(req: Request, res: Response) {
+
         try {
-            res.send("REMOVE");
+            const id = req.params.id;
+            const user = await User.destroy({ where: { id } });
+
+            if (!user) {
+                return res.status(404).json("User not found!");
+            }
+
+            return res.status(200).json("User was successful deleted!");
         } catch (error) {
             res.status(400).send(error);
         }

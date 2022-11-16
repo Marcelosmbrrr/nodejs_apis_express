@@ -13,13 +13,13 @@ module.exports = {
     async show(req, res) {
         try {
             const id = req.params.id;
-            const User = await User.findOne({ where: { id } });
+            const user = await User.findOne({ where: { id } });
 
-            if (!User) {
+            if (!user) {
                 return res.status(400).json("User not found!");
             }
 
-            res.status(200).json(User);
+            res.status(200).json(user);
         } catch (error) {
             console.log(error);
             res.status(400).send(error);

@@ -22,6 +22,9 @@ const User = conn.define("User", {
         type: DataTypes.STRING,
         allowNull: false,
     }
+}, {
+    timestamps: true,
+    paranoid: true // soft delete
 });
 
 export { User };
