@@ -33,6 +33,14 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+/*
+* App routes
+*/
+
+import { router } from "../src/routes/router";
+
+app.use(router);
+
 /**
  * Server Activation
  */
