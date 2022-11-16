@@ -3,6 +3,7 @@
 */
 
 /**
+ * 
  * Required External Modules
  */
 
@@ -14,27 +15,21 @@ import { conn } from "./config/db.config";
 
 dotenv.config();
 
-/**
- * App Variables
-*/
-
 if (!process.env.APP_PORT) {
     process.exit(1);
 }
-
-const APP_PORT: number = parseInt(process.env.APP_PORT as string, 10);
-const app = express();
 
 /**
  *  App Configuration
  */
 
+const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-// Run all db routines
-// Param: drop table before create
+// Connect to database
+// Drop table before create
 conn.sync({ force: true })
     .then(() => console.log("Database connected!"));
 
@@ -49,7 +44,7 @@ app.use(router);
  * Server Activation
  */
 
-app.listen(APP_PORT, () => {
-    console.log(`Listening on port ${APP_PORT}`);
+app.listen(process.env.APP_PORT, () => {
+    console.log(`Listening on port ${process.env.APP_PORT}`);
 });
 

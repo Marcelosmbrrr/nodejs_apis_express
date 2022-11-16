@@ -1,5 +1,6 @@
 import { randomUUID } from "crypto";
 import { Request, Response } from "express";
+import { validationResult } from 'express-validator';
 import { IController } from "../controllers/IController";
 // Model
 import { User } from "../models/User";
@@ -23,6 +24,13 @@ class UserController implements IController {
     }
 
     async store(req: Request, res: Response) {
+
+        // Req validation
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         try {
             res.send("STORE");
         } catch (error) {
@@ -31,6 +39,13 @@ class UserController implements IController {
     }
 
     async update(req: Request, res: Response) {
+
+        // Req validation
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         try {
             res.send("UPDATE");
         } catch (error) {
