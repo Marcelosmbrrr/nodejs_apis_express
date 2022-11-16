@@ -1,2 +1,2 @@
-# nodejs_apis_express
+# About
 Exploring nodejs through simple apis with express, sequelize and mongoose.
